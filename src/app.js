@@ -1,10 +1,18 @@
-import express from "express";
 import "dotenv/config";
+import express from "express";
+import { startDatabase } from "./database";
+import categoriesRouter from "./routers/categories.router";
+import productsRouter from "./routers/products.router";
 
 const app = express();
 
 app.use(express.json());
 
-export default app.listen(3333, () => {
-  console.log("Server running");
+app.use("/categories", categoriesRouter);
+
+app.use("/products", productsRouter);
+
+export default app.listen(process.env.PORT || 3333, () => {
+  startDatabase();
+  console.log("Server running at port: 3333");
 });
